@@ -1,1 +1,119 @@
+1.)	Total Revenue 
+
+--Calculating the total revenue from the 'orders' table.
+
+SELECT ROUND(SUM(total_price),2) AS Revenue
+FROM orders
+
+--------------------------------------------------------------------------------------------------------------------------
+
+2.)	Average Order Value
+
+--Calculating the average value of each order in the 'orders' table.
+
+--Step 1: Adding the total prices of all orders using SUM Function.
+
+--Step 2: Counting the distinct order_ids.
+
+SELECT ROUND(SUM(total_price) / COUNT(DISTINCT order_id),2) AS Average_Order_Value
+FROM orders
+
+--------------------------------------------------------------------------------------------------------------------------
+
+3.)	Total Pizzas Sold
+
+--Calculating the total pizzas sold from the 'orders' table.
+
+SELECT SUM(quantity) AS Total_Pizzas_Sold
+FROM orders
+
+--------------------------------------------------------------------------------------------------------------------------
+
+4.)	Total Orders
+
+--Calculating the total orders from the 'orders' table.
+
+SELECT COUNT(DISTINCT order_id) AS Total_Orders
+FROM orders
+
+--------------------------------------------------------------------------------------------------------------------------
+
+5.)	Average Pizzas Per Order
+
+--Calculating the Average Pizzas Per order from the 'orders' table.
+
+--Step 1: Calculating the total quantity of orders placed.
+
+--Step 2: Calculating the count of distinct order_id's.
+
+SELECT SUM(quantity)/COUNT(DISTINCT order_ID) AS Average_Pizzas_Per_Order
+FROM orders
+
+--------------------------------------------------------------------------------------------------------------------------
+
+6.)	Daily Trend for Total Orders
+
+--We will use the DATENAME function to extract the day of the week from the order_date column.
+
+--We will count the distinct order_id to identify the total orders placed.
+
+SELECT DATENAME(DW, order_date) AS Order_Day, COUNT(DISTINCT order_id) AS Total_Orders
+FROM orders
+
+--As we have used an aggregate function and another column in our query, we use group by clause to obtain the results.
+
+GROUP BY DATENAME(DW, order_date)
+
+--------------------------------------------------------------------------------------------------------------------------
+
+7.)	Month trend for Total Orders
+
+--We will use the DATENAME function to extract the month from the orders_date column.
+
+--We will count the distinct order_id to identify the total orders placed.
+
+SELECT DATENAME(Month, order_date) AS Month, COUNT(DISTINCT order_id) AS Total_Orders
+FROM orders
+
+--As we have used an aggregate function and another column in our query, we used group by clause to obtain the results.
+
+GROUP BY DATENAME(Month, order_date)
+
+--Ordering the results of the Total_orders placed in descending order to know which month has the highest order.
+
+ORDER BY Total_Orders DESC
+
+--------------------------------------------------------------------------------------------------------------------------
+
+8.)	Percentage of Sales by Pizza Category
+
+--Calculating the percentage of the total price for each pizza category relative to the overall total price of all orders.
+
+--Selecting the pizza category and calculating the percentage.
+
+SELECT pizza_category,
+
+--Calculating the percentage as the sum of total prices for the pizza category divided by the total price of all orders.
+
+ROUND(SUM(total_price) * 100 / (SELECT SUM(total_price) FROM orders), 2) AS Percentage_of_pizza_category
+
+--Retrieving data from the 'orders' and 'pizza' tables.
+
+From orders 
+
+--Using the Left join to connect the pizza table and the orders table using the order_details_id.
+
+LEFT JOIN pizza 
+ON orders.order_details_id = pizza.order_details_id
+
+--Grouping the results by pizza category.
+
+GROUP BY pizza_category;
+
+--------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
 
