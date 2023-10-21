@@ -1,3 +1,13 @@
+/*            
+
+
+Unlocking Insights into Pizza Sales Performance
+
+
+*/
+
+--------------------------------------------------------------------------------------------------------------------------
+
 1.)	Total Revenue 
 
 --Calculating the total revenue from the 'orders' table.
@@ -112,8 +122,172 @@ GROUP BY pizza_category;
 
 --------------------------------------------------------------------------------------------------------------------------
 
+9.)	Percentage of Sales by Pizza Size
 
+--Selecting the pizza_size and calculating the percentage of it
 
+SELECT pizza_size, 
 
+--Calculating the percentage as the sum of the total_price as per pizza size divided by the total price of all orders 
 
+ROUND(SUM(total_price) * 100 / (SELECT SUM(total_price) FROM orders),2) AS Percentage_of_pizza_size
+FROM orders
 
+--Using Left join to connect the pizza and orders table using the order_details_id column
+
+LEFT JOIN pizza
+ON orders.order_details_id = pizza.order_details_id
+
+--Grouping by pizza_size
+
+GROUP BY pizza_size
+
+--Ordering the results as per the highest order
+
+ORDER BY Percentage_of_pizza_size DESC;
+
+--------------------------------------------------------------------------------------------------------------------------
+
+10.) Top 5 Pizzas by Revenue
+
+--Selecting pizza_name and calculating the total_price from the pizza table and the orders table.
+
+--Selecting the top 5 pizza names.
+
+SELECT TOP 5 pizza_name, SUM(total_price) AS Total_Revenue
+FROM pizza
+
+--Using Left Join to connect the orders table and pizza table using the order_details_id column.
+
+LEFT JOIN orders
+ON orders.order_details_id = pizza.order_details_id
+
+--Grouping the results by pizza_name.
+
+GROUP BY pizza_name
+
+--Ordering the results of total_revenue in descending order.
+
+ORDER BY Total_Revenue DESC;
+
+--------------------------------------------------------------------------------------------------------------------------
+
+11.)	Top 5 Pizzas by Revenue
+
+--Selecting pizza_name and calculating the total_price from the pizza table and the orders table.
+
+--Selecting the Bottom 5 pizza names # Here we won't be ordering with DESC.
+
+SELECT TOP 5 pizza_name, ROUND(SUM(total_price),2) AS Total_Revenue
+FROM pizza
+
+--Using Left Join to connect the orders table and pizza table using the order_details_id column.
+
+LEFT JOIN orders
+ON orders.order_details_id = pizza.order_details_id
+
+--Grouping the results by pizza_name.
+
+GROUP BY pizza_name
+
+--Ordering the results of total_revenue in ascending order.
+
+ORDER BY Total_Revenue ASC;
+
+--------------------------------------------------------------------------------------------------------------------------
+
+12.)	 Top 5 Pizzas by Quantity
+
+--Selecting pizza_name and calculating the total_quantity from the pizza table and the orders table.
+
+--Selecting the Top 5 pizza names.
+
+SELECT TOP 5 pizza_name, SUM(quantity) AS Total_Quantity
+FROM pizza
+
+--Using Left Join to connect the orders table and pizza table using the order_details_id column.
+
+LEFT JOIN orders
+ON orders.order_details_id = pizza.order_details_id
+
+--Grouping the results by pizza_name.
+
+GROUP BY pizza_name
+
+--Ordering the results of total_quantity in descending order.
+
+ORDER BY Total_Quantity DESC;
+
+--------------------------------------------------------------------------------------------------------------------------
+
+13.)	  Bottom 5 Pizzas by Quantity
+
+--Selecting pizza_name and calculating the total_quantity from the pizza table and the orders table.
+
+--Selecting the Bottom 5 pizza names.
+
+SELECT TOP 5 pizza_name, SUM(quantity) AS Total_Quantity
+FROM pizza
+
+--Using Left Join to connect the orders table and pizza table using the order_details_id column.
+
+LEFT JOIN orders
+ON orders.order_details_id = pizza.order_details_id
+
+--Grouping the results by pizza_name.
+
+GROUP BY pizza_name
+
+--Ordering the results of total_quantity in ascending order.
+
+ORDER BY Total_Quantity ASC;
+
+--------------------------------------------------------------------------------------------------------------------------
+
+14.)	 Top 5 Pizzas by Total_Orders
+
+--Selecting pizza_name and calculating the total quantity from the pizza table and the orders table.
+
+--Selecting the top 5 pizza names.
+
+SELECT TOP 5 pizza_name, COUNT(DISTINCT order_id) AS Total_orders 
+
+--Retrieving the data from the 'pizza' and 'orders' tables.
+
+FROM pizza
+
+--Grouping the results by pizza_name.
+
+GROUP BY pizza_name
+
+--Ordering the results by the count of distinct orders in descending order.
+
+--Ordering in descending order to get the top 5
+
+ORDER BY Total_orders DESC
+
+--------------------------------------------------------------------------------------------------------------------------
+
+15.)	  Bottom 5 Pizzas by Total_Orders
+
+--Selecting pizza_name and calculating the total quantity from the pizza table and the orders table.
+
+--Selecting the bottom 5 pizza names.
+
+SELECT TOP 5 pizza_name, COUNT(DISTINCT order_id) AS Total_orders
+
+--Retrieving data from the 'pizza' and 'orders' tables.
+
+FROM pizza -- The 'pizza' table
+
+--Group the results by pizza_name. 
+
+GROUP BY pizza_name
+
+--Ordering the results by the count of distinct orders in descending order.
+
+--Ordering in ascending order to get the bottom 5
+
+ORDER BY Total_orders ASC;
+
+--------------------------------------------------------------------------------------------------------------------------
