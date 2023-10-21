@@ -22,7 +22,6 @@ FROM orders
 --Calculating the average value of each order in the 'orders' table.
 
 --Step 1: Adding the total prices of all orders using SUM Function.
-
 --Step 2: Counting the distinct order_ids.
 
 SELECT ROUND(SUM(total_price) / COUNT(DISTINCT order_id),2) AS Average_Order_Value
@@ -53,7 +52,6 @@ FROM orders
 --Calculating the Average Pizzas Per order from the 'orders' table.
 
 --Step 1: Calculating the total quantity of orders placed.
-
 --Step 2: Calculating the count of distinct order_id's.
 
 SELECT SUM(quantity)/COUNT(DISTINCT order_ID) AS Average_Pizzas_Per_Order
